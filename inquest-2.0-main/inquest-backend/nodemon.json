@@ -1,0 +1,13 @@
+{
+  "watch": ["src/"],
+  "ext": "js",
+  "ignore": [
+    "inquest.db*",
+    "reference_card.json",
+    "src/mockData/**",
+    "scripts/**",
+    "tests/**",
+    "node_modules/**"
+  ],
+  "delay": "500"
+}

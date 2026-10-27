@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd inquest-backend && npm run dev",
+    "dev:frontend": "cd inquest-frontend && npm run dev",
+    "start": "cd inquest-backend && npm start",
+    "install:all": "cd inquest-backend && npm install && cd ../inquest-frontend && npm install"
+  },
+  "dependencies": {
+    "multer": "^2.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

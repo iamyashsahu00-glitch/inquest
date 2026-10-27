@@ -1,0 +1,47 @@
+# Render Blueprint: backend deploy (frontend goes on Vercel)
+services:
+  - type: web
+    name: inquest-backend
+    runtime: node
+    rootDir: inquest-backend
+    plan: free            # free = DB resets on restart. For persistent data: plan: starter + disk block below
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    # --- Persistent SQLite (paid Starter plan, ~$7/mo): uncomment this block and DB_PATH below ---
+    # disk:
+    #   name: inquest-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: REQUIRE_AUTH
+        value: "true"
+      - key: AUTO_INVESTIGATE
+        value: "true"
+      - key: AUTO_MIN_CONFIDENCE
+        value: "85"
+      - key: AUTO_MAX_AMOUNT
+        value: "10000"
+      - key: AUTO_MAX_RISK
+        value: "30"
+      - key: RISK_HIGH_THRESHOLD
+        value: "60"
+      - key: PHOTO_VALUE_CAP
+        value: "5000"
+      - key: PHOTO_MIN_CONFIDENCE
+        value: "80"
+      - key: RATE_LIMIT_MAX
+        value: "400"
+      # - key: DB_PATH
+      #   value: /var/data/inquest.db
+      # Secrets: enter these in the Render dashboard
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGIN   # your Vercel URL, e.g. https://inquest.vercel.app (no trailing slash)
+        sync: false
